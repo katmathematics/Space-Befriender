@@ -8,9 +8,9 @@ public class SimpleTankController : MonoBehaviour
     private AudioSource audioSource;
     public AudioClip fire_laser;
 
-    public float moveSpeed = 6;
+    public float moveSpeed = .5f;
 
-    private float hDirection;
+    private float hDirection = -1;
 
     private Vector2 screenBounds;
     private float objectWidth;
@@ -38,19 +38,17 @@ public class SimpleTankController : MonoBehaviour
             _time -= _interval;
         }
 
-        transform.Translate(Vector2.right * hDirection * moveSpeed);
+        transform.Translate(Vector2.right * hDirection * moveSpeed * Time.deltaTime);
+        if (screenBounds.x - (objectWidth + .5f) <= transform.position.x) {
+            hDirection = hDirection * -1;
+        }
+        else if (screenBounds.x * - 1 + (objectWidth + .5f) >= transform.position.x) {
+            hDirection = hDirection * -1;
+        }
     }
 
     void LateUpdate() {
-        Vector3 viewPos = transform.position;
-
-        if (screenBounds.x - (objectWidth + .5f) <= viewPos.x || screenBounds.x * - 1 + (objectWidth + .5f) >= viewPos.x) {
-            hDirection = hDirection * -1;
-        }
-
-        viewPos.x = Mathf.Clamp(viewPos.x, screenBounds.x * - 1 + (objectWidth + .5f), screenBounds.x - (objectWidth + .5f));
         
-        transform.position = viewPos;
     }
 
     void FirePinkBullet() {
