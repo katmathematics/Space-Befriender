@@ -5,6 +5,15 @@ using UnityEngine;
 public class SimpleTankController : MonoBehaviour
 {
     public GameObject pinkProjectile;
+    private AudioSource audioSource;
+    public AudioClip fire_laser;
+
+    public float moveSpeed = 6;
+
+    private float hDirection;
+
+    private Vector2 screenBounds;
+    private float objectWidth;
 
     float _interval = 2.5f;
     float _time;
@@ -13,20 +22,40 @@ public class SimpleTankController : MonoBehaviour
     void Start()
     {
         _time = 0f;
+        audioSource = GetComponent<AudioSource>();
+
+        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        objectWidth = transform.GetComponent<SpriteRenderer>().bounds.size.x / 2;
     }
 
     // Update is called once per frame
     void Update()
     {
         _time += Time.deltaTime;
+
         while(_time >= _interval) {
             FirePinkBullet();
             _time -= _interval;
         }
+
+        transform.Translate(Vector2.right * hDirection * moveSpeed);
+    }
+
+    void LateUpdate() {
+        Vector3 viewPos = transform.position;
+
+        if (screenBounds.x - (objectWidth + .5f) <= viewPos.x || screenBounds.x * - 1 + (objectWidth + .5f) >= viewPos.x) {
+            hDirection = hDirection * -1;
+        }
+
+        viewPos.x = Mathf.Clamp(viewPos.x, screenBounds.x * - 1 + (objectWidth + .5f), screenBounds.x - (objectWidth + .5f));
+        
+        transform.position = viewPos;
     }
 
     void FirePinkBullet() {
         Instantiate(pinkProjectile, new Vector2(transform.position.x, transform.position.y + 1f), Quaternion.identity);
+        audioSource.PlayOneShot(fire_laser, 1f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {

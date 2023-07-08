@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
 
     private float hInput;
 
-    private Vector3 startingPos = new Vector3(0,3,0);
+    private Vector3 startingPos;
     private Vector2 screenBounds;
     private float objectWidth;
     private float objectHeight;
@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     private bool rightNext = true;
 
     public GameMaster gm;
+
+    private AudioSource audioSource;
+    public AudioClip death_sound;
 
     private void Awake() {
     }
@@ -27,6 +30,8 @@ public class PlayerController : MonoBehaviour
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
         objectWidth = transform.GetComponent<SpriteRenderer>().bounds.size.x / 2;
         objectHeight = transform.GetComponent<SpriteRenderer>().bounds.size.y / 2;
+        audioSource = GetComponent<AudioSource>();
+        startingPos = transform.position;
     }
 
     // Update is called once per frame
@@ -67,7 +72,9 @@ public class PlayerController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag.Equals("Projectile")) {
-            Destroy(gameObject);
+            audioSource.PlayOneShot(death_sound, 1f);
+            gm.LevelLose();
+            gameObject.SetActive(false); 
         }
     }
 }
