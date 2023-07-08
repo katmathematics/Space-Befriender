@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public float moveSpeed = 5;
+    public float moveSpeed = 6;
     public float dropDistance = 1;
 
     private float hInput;
@@ -63,5 +63,11 @@ public class PlayerController : MonoBehaviour
         }
 
         return viewPos;
+    }
+
+    void OnTriggerEnter2D(Collider2D collision) {
+        if (collision.gameObject.tag.Equals("Projectile")) {
+            Destroy(gameObject);
+        }
     }
 }
