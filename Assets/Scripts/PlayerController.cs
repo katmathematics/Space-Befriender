@@ -45,7 +45,7 @@ public class PlayerController : MonoBehaviour
         
         if (viewPos.y < screenBounds.y * - 1 + (objectHeight + 2)) {
             transform.position = startingPos;
-            rightNext = true
+            rightNext = true;
         }
         else {
             transform.position = viewPos;
