@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameOverDisplay : MonoBehaviour
 {
-    public Text pointsText;
+    public TMP_Text finalPointsText;
+    public GameObject mainUI;
 
     void Start() {
         gameObject.SetActive(false);
     }
 
     public void Setup(int score = 0) {
+        finalPointsText.text = "Final Score: " + score.ToString();
+        mainUI.SetActive(false);
         gameObject.SetActive(true);
     }
 
