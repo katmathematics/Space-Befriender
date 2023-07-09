@@ -30,7 +30,7 @@ public class GameMaster : MonoBehaviour
 
     public void LevelLose(int score = 0) {
         Time.timeScale = 0;
-        gameOverScreen.Setup();
+        gameOverScreen.Setup(score);
     }
 
     public void displayScore(int score = 0) {
