@@ -23,8 +23,6 @@ public class PlayerController : MonoBehaviour
     public AudioClip level_complete_sound;
     public AudioClip descent_sound;
 
-    public int score = 0;
-
     private void Awake() {
     }
 
@@ -55,8 +53,8 @@ public class PlayerController : MonoBehaviour
         if (viewPos.y < screenBounds.y * - 1 + (objectHeight + 2)) {
             transform.position = startingPos;
             audioSource.PlayOneShot(level_complete_sound, 1f);
-            score = score + 1;
-            gm.displayScore(score);
+            gm.incrementScore();
+            gm.LevelController();
             rightNext = true;
         }
         else {
@@ -82,7 +80,7 @@ public class PlayerController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D collision) {
         if (collision.gameObject.tag.Equals("Projectile")) {
             audioSource.PlayOneShot(death_sound, 1f);
-            gm.LevelLose(score);
+            gm.LevelLose();
             gameObject.SetActive(false); 
         }
     }

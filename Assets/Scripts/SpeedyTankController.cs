@@ -2,20 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleTankController : MonoBehaviour
+public class SpeedyTankController : MonoBehaviour
 {
     public GameObject projectile;
     private AudioSource audioSource;
     public AudioClip fire_laser;
 
-    public float moveSpeed = .5f;
+    public float moveSpeed = .7f;
 
     private float hDirection = -1;
 
     private Vector2 screenBounds;
     private float objectWidth;
 
-    float _interval = 2.5f;
+    float _interval = 1.5f;
     float _time;
 
     // Start is called before the first frame update

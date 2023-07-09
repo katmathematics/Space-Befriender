@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class AngledProjectile : MonoBehaviour
 {
     //public float moveSpeed = 2f;
 
     private Vector2 screenBounds;
     private float objectHeight;
     public float speed = 8f;
+    public float xSpeed = 8f;
 
     // Start is called before the first frame update
     void Start()
@@ -21,6 +22,7 @@ public class Projectile : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector2.up * speed * Time.deltaTime);
+        transform.Translate(Vector2.right * xSpeed * Time.deltaTime);
 
         if(transform.position.y > screenBounds.y + objectHeight) {
             Destroy(gameObject);

@@ -9,6 +9,8 @@ public class GameOverDisplay : MonoBehaviour
 {
     public TMP_Text finalPointsText;
     public GameObject mainUI;
+    public GameObject pauseUI;
+    public GameObject pauseButton;
 
     void Start() {
         gameObject.SetActive(false);
@@ -17,6 +19,8 @@ public class GameOverDisplay : MonoBehaviour
     public void Setup(int score = 0) {
         finalPointsText.text = "Final Score: " + score.ToString();
         mainUI.SetActive(false);
+        pauseUI.SetActive(false);
+        pauseButton.SetActive(false);
         gameObject.SetActive(true);
     }
 
