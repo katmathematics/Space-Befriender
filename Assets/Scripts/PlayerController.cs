@@ -14,12 +14,14 @@ public class PlayerController : MonoBehaviour
     private float objectWidth;
     private float objectHeight;
 
-    private bool rightNext = true;
+    public bool rightNext = true;
 
     public GameMaster gm;
 
     private AudioSource audioSource;
     public AudioClip death_sound;
+    public AudioClip level_complete_sound;
+    public AudioClip descent_sound;
 
     private void Awake() {
     }
@@ -50,6 +52,7 @@ public class PlayerController : MonoBehaviour
         
         if (viewPos.y < screenBounds.y * - 1 + (objectHeight + 2)) {
             transform.position = startingPos;
+            audioSource.PlayOneShot(level_complete_sound, 1f);
             rightNext = true;
         }
         else {
@@ -59,10 +62,12 @@ public class PlayerController : MonoBehaviour
 
     private Vector3 CheckLayer(Vector3 viewPos){
         if (rightNext && screenBounds.x - (objectWidth + .5f) <= viewPos.x) {
+            audioSource.PlayOneShot(descent_sound, 1f);
             viewPos.y = viewPos.y - dropDistance;
             rightNext = false;
         }
         else if (!rightNext && screenBounds.x * - 1 + (objectWidth + .5f) >= viewPos.x) {
+            audioSource.PlayOneShot(descent_sound, 1f);
             viewPos.y = viewPos.y - dropDistance;
             rightNext = true;
         }
