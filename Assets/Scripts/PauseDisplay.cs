@@ -24,4 +24,8 @@ public class PauseDisplay : MonoBehaviour
             gameObject.SetActive(false);
         }
     }
+
+    public void quitGame() {
+        Application.Quit();
+    }
 }
